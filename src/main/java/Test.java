@@ -1,3 +1,6 @@
+import Models.TransitRequest;
+import Models.TransitResult;
+import Utils.JsonReader;
 import gnu.io.CommPort;
 import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
@@ -6,9 +9,14 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Test
 {
+
     public Test()
     {
         super();
@@ -28,7 +36,7 @@ public class Test
             if ( commPort instanceof SerialPort )
             {
                 SerialPort serialPort = (SerialPort) commPort;
-                serialPort.setSerialPortParams(57600,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
+                serialPort.setSerialPortParams(115200,SerialPort.DATABITS_8,SerialPort.STOPBITS_1,SerialPort.PARITY_NONE);
 
                 InputStream in = serialPort.getInputStream();
                 OutputStream out = serialPort.getOutputStream();
@@ -77,9 +85,11 @@ public class Test
     {
         OutputStream out;
 
+
         public SerialWriter ( OutputStream out )
         {
             this.out = out;
+
         }
 
         public void run ()
@@ -87,10 +97,12 @@ public class Test
             try
             {
                 int c = 0;
-                while ( ( c = System.in.read()) > -1 )
-                {
-                    this.out.write(c);
-                }
+                TransitRequest transitRequest = new TransitRequest("Politechnika+Wrocławska", "Barlickiego+3,+50-001+Wrocław");
+                TransitResult result = JsonReader.getTransit(transitRequest);
+                this.out.write(writeToConsole("Naąóme: "+result.getTramName()));
+                this.out.write(writeToConsole("Destination: "+result.getDirection()));
+                this.out.write(writeToConsole("Time: "+result.getArrivalTime()));
+
             }
             catch ( IOException e )
             {
@@ -98,12 +110,27 @@ public class Test
             }
         }
     }
+    public static byte[] writeToConsole(String oneLine){
+
+        oneLine = oneLine.replace("ą","a");
+        oneLine = oneLine.replace("ć","c");
+        oneLine = oneLine.replace("ę","e");
+        oneLine = oneLine.replace("ń","n");
+        oneLine = oneLine.replace("ó","o");
+        oneLine = oneLine.replace("ś","s");
+        oneLine = oneLine.replace("ź","z");
+        oneLine = oneLine.replace("ż","z");
+        return (oneLine+new String(new char[48-(oneLine.length()%48)]).replace('\0', ' ')).getBytes();
+    }
 
     public static void main ( String[] args )
     {
+        String libPathProperty = System.getProperty("java.library.path");
+        System.out.println("Path to lib: "+ libPathProperty);
+
         try
         {
-            (new Test()).connect("COM3");
+            (new Test()).connect("COM7");
         }
         catch ( Exception e )
         {

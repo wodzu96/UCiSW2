@@ -14,5 +14,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'org.json', name: 'json', version: '20180130'
     compile group: 'org.rxtx', name: 'rxtx', version: '2.1.7'
+    compile group: 'com.moparisthebest', name: 'junidecode', version: '0.1.1'
+
 
 }
