@@ -41,7 +41,7 @@ public class Test
                 InputStream in = serialPort.getInputStream();
                 OutputStream out = serialPort.getOutputStream();
 
-                (new Thread(new SerialReader(in))).start();
+                (new Thread(new SerialReader(in ,out))).start();
                 (new Thread(new SerialWriter(out))).start();
 
             }
@@ -56,10 +56,12 @@ public class Test
     public static class SerialReader implements Runnable
     {
         InputStream in;
+        OutputStream out;
 
-        public SerialReader ( InputStream in )
+        public SerialReader ( InputStream in, OutputStream out )
         {
             this.in = in;
+            this.out = out;
         }
 
         public void run ()
@@ -68,15 +70,34 @@ public class Test
             int len = -1;
             try
             {
+                String last = "";
                 while ( ( len = this.in.read(buffer)) > -1 )
                 {
-                    System.out.print(new String(buffer,0,len));
+                  //  System.out.println(new String(buffer, 0, len));
+                    if((new String(buffer, 0, len)).equals("6") && last.equals("1"))
+                        writeTo("Do Piotra", "Barlickiego+3,+50-001+Wrocław");
+                    else if((new String(buffer, 0, len)).equals("E") && last.equals("1"))
+                        writeTo("Do Kuby", "Kiełczowska,Wrocław");
+                    last = new String(buffer, 0, len);
                 }
             }
             catch ( IOException e )
             {
                 e.printStackTrace();
             }
+        }
+
+        void writeTo(String to, String destination) throws IOException {
+            this.out.write("qw".getBytes());
+            this.out.write(writeToConsole(to));
+            TransitRequest transitRequest = new TransitRequest("Politechnika+Wrocławska", destination);
+            for(int i = 0; i<4; ++i) {
+                TransitResult result = JsonReader.getTransit(transitRequest);
+                printResult(this.out, result);
+                transitRequest.setDepartureTime(result.getArrivalTimeName());
+            }
+            this.out.write(writeToConsole("1 -  do Piotra"));
+            this.out.write(writeToConsole("2 -  do Kuby"));
         }
     }
 
@@ -97,20 +118,19 @@ public class Test
             try
             {
                 int c = 0;
-                TransitRequest transitRequest = new TransitRequest("Politechnika+Wrocławska", "Barlickiego+3,+50-001+Wrocław");
-                TransitResult result = JsonReader.getTransit(transitRequest);
                 this.out.write(writeToConsole("Do Piotra:"));
-                this.out.write(writeToConsole("Name: "+result.getTramName()));
-                this.out.write(writeToConsole("Destination: "+result.getDirection()));
-                this.out.write(writeToConsole("Time: "+result.getArrivalTime()));
-
-                 transitRequest = new TransitRequest("Politechnika+Wrocławska", "Kiełczowska,Wrocław");
-                 result = JsonReader.getTransit(transitRequest);
-                this.out.write(writeToConsole("Do Kuby:"));
-                this.out.write(writeToConsole("Name: "+result.getTramName()));
-                this.out.write(writeToConsole("Destination: "+result.getDirection()));
-                this.out.write(writeToConsole("Time: "+result.getArrivalTime()));
-
+                TransitRequest transitRequest = new TransitRequest("Politechnika+Wrocławska", "Barlickiego+3,+50-001+Wrocław");
+                for(int i = 0; i<3; ++i) {
+                    TransitResult result = JsonReader.getTransit(transitRequest);
+                    printResult(this.out, result);
+                    transitRequest.setDepartureTime(result.getArrivalTimeName());
+                }
+               /* for(int i = 0; i<5; ++i) {
+                    TransitRequest transitRequest = new TransitRequest("Politechnika+Wrocławska", "Kiełczowska,Wrocław");
+                    TransitResult result = JsonReader.getTransit(transitRequest);
+                    this.out.write(writeToConsole("Do Kuby:"));
+                    printResult(this, result);
+                }*/
 
             }
             catch ( IOException e )
@@ -118,6 +138,12 @@ public class Test
                 e.printStackTrace();
             }
         }
+    }
+    public static void printResult(OutputStream out, TransitResult result) throws IOException {
+        out.write(writeToConsole("Name: "+result.getTramName()));
+        out.write(writeToConsole("Destination: "+result.getDirection()));
+        out.write(writeToConsole("Time: "+result.getArrivalTime()));
+        out.write(writeToConsole(" "));
     }
     public static byte[] writeToConsole(String oneLine){
 
@@ -149,7 +175,7 @@ public class Test
 
         try
         {
-            (new Test()).connect("COM7");
+            (new Test()).connect("COM3");
         }
         catch ( Exception e )
         {

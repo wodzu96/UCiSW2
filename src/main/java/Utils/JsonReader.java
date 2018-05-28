@@ -46,18 +46,23 @@ public class JsonReader {
         url += "origin=" + transitRequest.getOrygin();
         url += "&destination=" + transitRequest.getDestination();
         url += "&mode=transit";
+        if(transitRequest.getDepartureTime()!=0)
+            url += "&departure_time="+transitRequest.getDepartureTime();
         url += "&key=AIzaSyC0zgm7x8Og0UhZ7N7ra5p_jNnrYslcS3g";
 
         JSONObject response = jsonGetRequest(url);
+        System.out.print(url);
         JSONArray steps = response.getJSONArray("routes").getJSONObject(0).getJSONArray("legs").getJSONObject(0).getJSONArray("steps");
 
         for(Object stepObject : steps){
             JSONObject step = new JSONObject(stepObject.toString());
-            if(step.getString("travel_mode").equals("TRANSIT")){
+            if(step.getString("travel_mode").equals("TRANSIT")) {
                 JSONObject transitDetails = step.getJSONObject("transit_details");
                 TransitResult result = new TransitResult(transitDetails.getJSONObject("line").getString("short_name"),
                         transitDetails.getString("headsign"),
-                        transitDetails.getJSONObject("departure_time").getString("text"));
+                        transitDetails.getJSONObject("departure_time").getString("text"),
+                        transitDetails.getJSONObject("departure_time").getInt    ("value"));
+              //  result.print();
                 return result;
             }
         }

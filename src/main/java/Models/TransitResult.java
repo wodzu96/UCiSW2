@@ -5,13 +5,31 @@ package Models;
  */
 public class TransitResult {
     private String tramName, direction, arrivalTime;
+    private int arrivalTimeName;
 
-    public TransitResult(String tramName, String direction, String arrivalTime) {
+
+    public TransitResult(String tramName, String direction, String arrivalTime, int arrivalTimeName) {
         this.tramName = tramName;
         this.direction = direction;
         this.arrivalTime = arrivalTime;
+        this.arrivalTimeName = arrivalTimeName;
     }
 
+    public int getArrivalTimeName() {
+        return arrivalTimeName;
+    }
+
+    public void setArrivalTimeName(int arrivalTimeName) {
+        this.arrivalTimeName = arrivalTimeName;
+    }
+
+    public void print(){
+        System.out.print("Name: "+this.getTramName());
+        System.out.println();
+        System.out.print("Destination: "+this.getDirection());
+        System.out.println();
+        System.out.print("Time: "+this.getArrivalTime());
+    }
     public String getTramName() {
         return tramName;
     }

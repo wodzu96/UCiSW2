@@ -5,18 +5,18 @@ package Models;
  */
 public class TransitRequest {
     private String orygin, destination;
-    private int arrivalTime;
+    private int departureTime;
 
     public TransitRequest(String orygin, String destination) {
         this.orygin = orygin;
         this.destination = destination;
-        this.arrivalTime = 0;
+        this.departureTime = 0;
     }
 
-    public TransitRequest(String orygin, String destination, int arrivalTime) {
+    public TransitRequest(String orygin, String destination, int departureTime) {
         this.orygin = orygin;
         this.destination = destination;
-        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
     }
 
     public String getOrygin() {
@@ -35,11 +35,11 @@ public class TransitRequest {
         this.destination = destination;
     }
 
-    public int getArrivalTime() {
-        return arrivalTime;
+    public int getDepartureTime() {
+        return departureTime;
     }
 
-    public void setArrivalTime(int arrivalTime) {
-        this.arrivalTime = arrivalTime;
+    public void setDepartureTime(int departureTime) {
+        this.departureTime = departureTime;
     }
 }
