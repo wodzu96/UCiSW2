@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="11298245-8da7-41a4-a999-d0269e91fb5b" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/Models/TransitRequest.class" afterPath="$PROJECT_DIR$/out/production/classes/Models/TransitRequest.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/Models/TransitResult.class" afterPath="$PROJECT_DIR$/out/production/classes/Models/TransitResult.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/Test$SerialReader.class" afterPath="$PROJECT_DIR$/out/production/classes/Test$SerialReader.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/classes/Utils/JsonReader.class" afterPath="$PROJECT_DIR$/out/production/classes/Utils/JsonReader.class" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -28,8 +24,8 @@
       <file leaf-file-name="JsonReader.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Utils/JsonReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="57" column="40" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+            <state relative-caret-position="346">
+              <caret line="54" column="7" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1001,7 +997,14 @@
       <option name="project" value="LOCAL" />
       <updated>1527505365137</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Refreshing">
+      <created>1528105946958</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1528105946958</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1535,8 +1538,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Utils/JsonReader.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="57" column="40" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
+        <state relative-caret-position="346">
+          <caret line="54" column="7" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="71" selection-end-column="0" />
           <folding />
         </state>
       </provider>
